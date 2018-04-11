@@ -18,9 +18,11 @@ if ( ! current_user_can( 'customize' ) ) {
 
 wp_reset_vars( array( 'url', 'return' ) );
 $url = wp_unslash( $url );
+$url = esc_url_raw( $url );
 $url = wp_validate_redirect( $url, home_url( '/' ) );
 if ( $return ) {
 	$return = wp_unslash( $return );
+	$return = esc_url_raw( $return );
 	$return = wp_validate_redirect( $return );
 }
 if ( ! $return ) {
@@ -146,7 +148,7 @@ do_action( 'customize_controls_print_scripts' );
 			<div id="customize-info" class="accordion-section">
 				<div class="accordion-section-title" aria-label="<?php esc_attr_e( 'Customizer Options' ); ?>" tabindex="0">
 					<span class="preview-notice"><?php
-						echo sprintf( __( 'You are customizing %s' ), '<strong class="theme-name site-title">' . get_bloginfo( 'name' ) . '</strong>' );
+						echo sprintf( __( 'You are customizing %s' ), '<strong class="theme-name site-title">' . get_bloginfo( 'name', 'display' ) . '</strong>' );
 					?></span>
 				</div>
 				<div class="accordion-section-content"><?php

@@ -830,7 +830,7 @@ function page_template_dropdown( $default = '' ) {
 	ksort( $templates );
 	foreach ( array_keys( $templates ) as $template ) {
 		$selected = selected( $default, $templates[ $template ], false );
-		echo "\n\t<option value='" . $templates[ $template ] . "' $selected>$template</option>";
+		echo "\n\t<option value='" . esc_attr( $templates[ $template ] ) . "' $selected>" . esc_html( $template ) . "</option>";
 	}
 }
 
@@ -1776,6 +1776,7 @@ function _media_states( $post ) {
 function compression_test() {
 ?>
 	<script type="text/javascript">
+	var compressionNonce = <?php echo wp_json_encode( wp_create_nonce( 'update_can_compress_scripts' ) ); ?>;
 	var testCompression = {
 		get : function(test) {
 			var x;
@@ -1795,7 +1796,7 @@ function compression_test() {
 					}
 				};
 
-				x.open('GET', ajaxurl + '?action=wp-compression-test&test='+test+'&'+(new Date()).getTime(), true);
+				x.open('GET', ajaxurl + '?action=wp-compression-test&test='+test+'&_ajax_nonce='+compressionNonce+'&'+(new Date()).getTime(), true);
 				x.send('');
 			}
 		},

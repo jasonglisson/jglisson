@@ -16,13 +16,13 @@
 
 // ** MySQL settings ** //
 /** The name of the database for WordPress */
-define( 'DB_NAME', 'default' );
+define( 'DB_NAME', 'jasong11_jasonglisson' );
 /** MySQL database username */
-define( 'DB_USER', 'user' );
+define( 'DB_USER', 'jasong11_jasongl' );
 /** MySQL database password */
-define( 'DB_PASSWORD', 'user' );
+define( 'DB_PASSWORD', 'Music4life!' );
 /** MySQL hostname */
-define( 'DB_HOST', 'db' );
+define( 'DB_HOST', 'localhost' );
 /** Database Charset to use in creating database tables. */
 define( 'DB_CHARSET', 'utf8' );
 /** The Database Collate type. Don't change this if in doubt. */

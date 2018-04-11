@@ -194,8 +194,10 @@ function wp_ajax_wp_compression_test() {
 			echo $out;
 			wp_die();
 		} elseif ( 'no' == $_GET['test'] ) {
+			check_ajax_referer( 'update_can_compress_scripts' );
 			update_site_option('can_compress_scripts', 0);
 		} elseif ( 'yes' == $_GET['test'] ) {
+			check_ajax_referer( 'update_can_compress_scripts' );
 			update_site_option('can_compress_scripts', 1);
 		}
 	}
@@ -2601,7 +2603,7 @@ function wp_ajax_get_revision_diffs() {
 	if ( ! $post = get_post( (int) $_REQUEST['post_id'] ) )
 		wp_send_json_error();
 
-	if ( ! current_user_can( 'read_post', $post->ID ) )
+	if ( ! current_user_can( 'edit_post', $post->ID ) )
 		wp_send_json_error();
 
 	// Really just pre-loading the cache here.

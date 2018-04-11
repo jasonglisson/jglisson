@@ -2905,10 +2905,11 @@ function wp_untrash_post_comments( $post = null ) {
 
 	foreach ( $group_by_status as $status => $comments ) {
 		// Sanity check. This shouldn't happen.
-		if ( 'post-trashed' == $status )
+		if ( 'post-trashed' == $status ) {
 			$status = '0';
-		$comments_in = implode( "', '", $comments );
-		$wpdb->query( "UPDATE $wpdb->comments SET comment_approved = '$status' WHERE comment_ID IN ('" . $comments_in . "')" );
+		}
+		$comments_in = implode( ', ', array_map( 'intval', $comments ) );
+		$wpdb->query( $wpdb->prepare( "UPDATE $wpdb->comments SET comment_approved = %s WHERE comment_ID IN ($comments_in)", $status ) );
 	}
 
 	clean_comment_cache( array_keys($statuses) );
@@ -4223,10 +4224,10 @@ function get_page_by_path( $page_path, $output = OBJECT, $post_type = 'page' ) {
 	$page_path = str_replace('%2F', '/', $page_path);
 	$page_path = str_replace('%20', ' ', $page_path);
 	$parts = explode( '/', trim( $page_path, '/' ) );
-	$parts = esc_sql( $parts );
 	$parts = array_map( 'sanitize_title_for_query', $parts );
+	$escaped_parts = esc_sql( $parts );
 
-	$in_string = "'" . implode( "','", $parts ) . "'";
+	$in_string = "'" . implode( "','", $escaped_parts ) . "'";
 
 	if ( is_array( $post_type ) ) {
 		$post_types = $post_type;
